@@ -1,24 +1,26 @@
-import { gql, useQuery } from '@apollo/client';
-import Statistic from 'antd/es/statistic/Statistic';
 import React from 'react';
+import ProductList from './components/ProductList';
+import TotalValue from './components/TotalValue';
+import ProductForm from './components/ProductForm';
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 
-const countQuery = gql`
-  query CountQuery {
-    products_aggregate {
-      aggregate {
-        count
-      }
-    }
-  }
-`
+// Create an Apollo Client instance
+const client = new ApolloClient({
+  uri: 'http://localhost:8080/v1/graphql', // Your GraphQL server endpoint
+  cache: new InMemoryCache(),
+});
 
-export function Products(): JSX.Element {
-
-  const { data } = useQuery(countQuery);
-
+const Products: React.FC = () => {
   return (
-    <div>
-      <Statistic title="Total products" value={data?.products_aggregate?.aggregate.count} />
-    </div>
+    <ApolloProvider client={client}>
+      <div>
+        <h1>Product Inventory App</h1>
+        <ProductList />
+        <TotalValue />
+        <ProductForm />
+      </div>
+    </ApolloProvider>
   );
-}
+};
+
+export default Products;

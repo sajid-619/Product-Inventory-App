@@ -5,7 +5,7 @@ import { Layout, Typography } from 'antd';
 
 
 import { ApolloClient, ApolloProvider, InMemoryCache, HttpLink } from '@apollo/client';
-import { Products } from './Products';
+import  Products  from './Products';
 
 
 const { Header, Content } = Layout;
